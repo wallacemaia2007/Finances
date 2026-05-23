@@ -1,29 +1,26 @@
 package br.com.maiawall.finances.infra.http;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ai")
 public class OllamaController {
 
-    private OllamaChatModel chatModel;
+    private final ChatClient chatClient;
 
-    public OllamaController(OllamaChatModel chatModel) {
-        this.chatModel = chatModel;
+    public OllamaController(ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     @GetMapping("/ask/{question}")
     public String ask(@PathVariable String question) {
 
-        return ChatClient.create(chatModel)
-                .prompt(question)
+        return chatClient
+                .prompt()
+                .system("You are a helpful assistant for financial questions.")
+                .user(question)
                 .call()
                 .content();
     }
-
 }
