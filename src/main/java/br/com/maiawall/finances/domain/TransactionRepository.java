@@ -8,4 +8,6 @@ public interface TransactionRepository {
 
     List<Transaction> findAllByCategory(Category category);
 
+    List<Transaction> findAll();
+
 }

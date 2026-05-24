@@ -38,14 +38,18 @@ public class AudioResponseController {
         @PostMapping(value = "/chat", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "audio/mpeg")
         public ResponseEntity<ByteArrayResource> sinthesize(@RequestBody SynthesizeRequest request) throws Exception {
 
-                String textoResposta = chatClient
-                                .prompt()
-                                .system("Você é um assistente financeiro. Responda as perguntas do usuário de forma clara e concisa em português. Não mencione nada sobre geração de áudio, apenas responda a pergunta normalmente.")
-                                .user(request.text())
-                                .call()
-                                .content();
+                /*
+                 * String textoResposta = chatClient
+                 * .prompt()
+                 * .system("Você é um assistente financeiro. Responda as perguntas do usuário de forma clara e concisa em português. Não mencione nada sobre geração de áudio, apenas responda a pergunta normalmente."
+                 * )
+                 * .user(request.text())
+                 * .call()
+                 * .content();
+                 */
+                // byte[] audio = convertTextToSpeech(textoResposta); // Para usar a resposta do
+                // chat como áudio
 
-                //byte[] audio = convertTextToSpeech(textoResposta); // Para usar a resposta do chat como áudio
                 byte[] audio = convertTextToSpeech(request.text());
 
                 return ResponseEntity.ok()

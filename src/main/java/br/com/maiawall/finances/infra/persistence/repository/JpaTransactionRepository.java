@@ -31,4 +31,10 @@ public class JpaTransactionRepository implements TransactionRepository {
         return entities.stream().map(TransactionEntity::toDomain).toList();
     }
 
+    @Override
+    public List<Transaction> findAll() {
+        var entities = transactionEntityRepository.findAll();
+        return entities.stream().map(TransactionEntity::toDomain).toList();
+    }
+
 }
