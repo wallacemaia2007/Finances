@@ -12,33 +12,33 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api")
 public class TranscriptionController {
 
-    private final ChatClient chatClient;
+        private final ChatClient chatClient;
 
-    public TranscriptionController(ChatClient chatClient) {
-        this.chatClient = chatClient;
-    }
+        public TranscriptionController(ChatClient chatClient) {
+                this.chatClient = chatClient;
+        }
 
-    @PostMapping(value = "/transcribe", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String transcribe(
-            @RequestParam("file") MultipartFile file) {
+        @PostMapping(value = "/transcribe", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+        public String transcribe(
+                        @RequestParam("file") MultipartFile file) {
 
-        Media audioMedia = new Media(
-                MimeTypeUtils.parseMimeType(file.getContentType()),
-                file.getResource());
+                Media audioMedia = new Media(
+                                MimeTypeUtils.parseMimeType(file.getContentType()),
+                                file.getResource());
 
-        UserMessage userMessage = UserMessage.builder()
-                .text("""
-                        Transcreva o áudio para português.
-                        Retorne apenas a transcrição.
-                        """)
-                .media(audioMedia)
-                .build();
+                UserMessage userMessage = UserMessage.builder()
+                                .text("""
+                                                Transcreva o áudio para português.
+                                                Retorne apenas a transcrição.
+                                                """)
+                                .media(audioMedia)
+                                .build();
 
-        String response = chatClient.prompt()
-                .messages(userMessage)
-                .call()
-                .content();
+                String response = chatClient.prompt()
+                                .messages(userMessage)
+                                .call()
+                                .content();
 
-        return response;
-    }
+                return response;
+        }
 }
