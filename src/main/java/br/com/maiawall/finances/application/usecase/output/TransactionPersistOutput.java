@@ -2,7 +2,7 @@ package br.com.maiawall.finances.application.usecase.output;
 
 import java.math.BigDecimal;
 
-import br.com.maiawall.finances.domain.Transaction;
+import br.com.maiawall.finances.domain.entity.Transaction;
 
 public record TransactionPersistOutput(String id, String description, BigDecimal amount, String category) {
 

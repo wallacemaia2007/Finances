@@ -6,7 +6,7 @@ import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.stereotype.Service;
 
 import br.com.maiawall.finances.application.usecase.output.TransactionPersistOutput;
-import br.com.maiawall.finances.domain.TransactionRepository;
+import br.com.maiawall.finances.domain.repository.TransactionRepository;
 
 @Service
 public class ListTransactionsUseCase {

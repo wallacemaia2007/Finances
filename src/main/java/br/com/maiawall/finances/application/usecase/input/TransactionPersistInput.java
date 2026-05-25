@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 import org.springframework.ai.tool.annotation.ToolParam;
 
-import br.com.maiawall.finances.domain.Category;
+import br.com.maiawall.finances.domain.enums.Category;
 
 public record TransactionPersistInput(
-        @ToolParam(description = "A descrição da transação.") String description,
-        @ToolParam(description = "O valor da transação.") BigDecimal amount,
-        @ToolParam(description = "A categoria da transação.") Category category) {
+                @ToolParam(description = "A descrição da transação.") String description,
+                @ToolParam(description = "O valor da transação.") BigDecimal amount,
+                @ToolParam(description = "A categoria da transação.") Category category) {
 
 }

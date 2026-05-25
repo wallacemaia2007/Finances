@@ -1,4 +1,4 @@
-package br.com.maiawall.finances.domain;
+package br.com.maiawall.finances.domain.entity;
 
 import java.util.UUID;
 

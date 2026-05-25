@@ -3,8 +3,8 @@ package br.com.maiawall.finances.infra.persistence.entity;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import br.com.maiawall.finances.domain.Category;
-import br.com.maiawall.finances.domain.Transaction;
+import br.com.maiawall.finances.domain.enums.Category;
+import br.com.maiawall.finances.domain.entity.Transaction;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

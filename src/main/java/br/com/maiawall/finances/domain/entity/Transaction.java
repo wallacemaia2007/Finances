@@ -1,7 +1,8 @@
-package br.com.maiawall.finances.domain;
+package br.com.maiawall.finances.domain.entity;
 
 import java.math.BigDecimal;
 
+import br.com.maiawall.finances.domain.enums.Category;
 import lombok.Getter;
 import lombok.Setter;
 

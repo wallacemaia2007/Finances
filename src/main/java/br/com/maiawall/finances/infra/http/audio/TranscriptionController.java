@@ -1,4 +1,4 @@
-package br.com.maiawall.finances.infra.http;
+package br.com.maiawall.finances.infra.http.audio;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

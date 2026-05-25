@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.maiawall.finances.domain.Category;
+import br.com.maiawall.finances.domain.enums.Category;
 import br.com.maiawall.finances.infra.persistence.entity.TransactionEntity;
 
 @Repository

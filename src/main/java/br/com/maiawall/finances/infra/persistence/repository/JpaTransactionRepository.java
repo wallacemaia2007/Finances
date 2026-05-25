@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import br.com.maiawall.finances.domain.Category;
-import br.com.maiawall.finances.domain.Transaction;
-import br.com.maiawall.finances.domain.TransactionRepository;
+import br.com.maiawall.finances.domain.enums.Category;
+import br.com.maiawall.finances.domain.entity.Transaction;
+import br.com.maiawall.finances.domain.repository.TransactionRepository;
 import br.com.maiawall.finances.infra.persistence.entity.TransactionEntity;
 
 @Repository

@@ -27,7 +27,7 @@ import br.com.maiawall.finances.application.usecase.TransactionPersistUseCase;
 import br.com.maiawall.finances.application.usecase.audio.SynthesizeAudioUseCase;
 import br.com.maiawall.finances.application.usecase.audio.TranscribeAudioUseCase;
 import br.com.maiawall.finances.application.usecase.input.TranscribeAudioInput;
-import br.com.maiawall.finances.domain.Category;
+import br.com.maiawall.finances.domain.enums.Category;
 import br.com.maiawall.finances.infra.http.request.TransactionRequestDTO;
 import br.com.maiawall.finances.infra.http.response.TransactionResponseDTO;
 

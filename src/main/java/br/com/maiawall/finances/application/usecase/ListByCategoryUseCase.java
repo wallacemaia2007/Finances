@@ -7,8 +7,8 @@ import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 
 import br.com.maiawall.finances.application.usecase.output.TransactionPersistOutput;
-import br.com.maiawall.finances.domain.Category;
-import br.com.maiawall.finances.domain.TransactionRepository;
+import br.com.maiawall.finances.domain.enums.Category;
+import br.com.maiawall.finances.domain.repository.TransactionRepository;
 
 @Service
 public class ListByCategoryUseCase {
