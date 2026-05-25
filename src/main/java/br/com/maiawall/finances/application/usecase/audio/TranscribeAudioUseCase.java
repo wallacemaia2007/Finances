@@ -3,6 +3,8 @@ package br.com.maiawall.finances.application.usecase.audio;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.content.Media;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 
@@ -18,7 +20,10 @@ public class TranscribeAudioUseCase {
         this.chatClient = chatClient;
     }
 
-    public TranscribeAudioOutput execute(TranscribeAudioInput input) throws Exception {
+    @Tool(name = "TranscribeAudio", description = "Transcreve um arquivo de áudio para texto usando o ChatGPT.")
+    public TranscribeAudioOutput execute(
+            @ToolParam(description = "O arquivo de áudio a ser transcrito.") TranscribeAudioInput input)
+            throws Exception {
         var file = input.file();
 
         Media audioMedia = new Media(

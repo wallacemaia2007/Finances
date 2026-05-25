@@ -6,6 +6,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
 
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +30,17 @@ public class SynthesizeAudioUseCase {
         this.httpClient = HttpClient.newHttpClient();
     }
 
-    public SynthesizeAudioOutput execute(SynthesizeAudioInput input) throws Exception {
+    @Tool(name = "SynthesizeAudio", description = "Converte texto em áudio usando a API do Google TTS.")
+    public SynthesizeAudioOutput execute(
+            @ToolParam(description = "O texto a ser sintetizado em áudio.") SynthesizeAudioInput input)
+            throws Exception {
         byte[] audio = convertTextToSpeech(input.text());
         return SynthesizeAudioOutput.from(audio);
     }
 
-    private byte[] convertTextToSpeech(String text) throws Exception {
+    @Tool(name = "ConvertTextToSpeech", description = "Converte texto em áudio usando a API do Google TTS.")
+    private byte[] convertTextToSpeech(@ToolParam(description = "O texto a ser sintetizado em áudio.") String text)
+            throws Exception {
         ObjectNode body = objectMapper.createObjectNode();
         body.putObject("input").put("text", text);
         body.putObject("voice").put("languageCode", "pt-BR").put("name", "pt-BR-Standard-B");

@@ -6,6 +6,8 @@ import br.com.maiawall.finances.application.usecase.input.TransactionPersistInpu
 import br.com.maiawall.finances.application.usecase.output.TransactionPersistOutput;
 import br.com.maiawall.finances.domain.Transaction;
 import br.com.maiawall.finances.domain.TransactionRepository;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
 
 @Service
 public class TransactionPersistUseCase {
@@ -16,7 +18,9 @@ public class TransactionPersistUseCase {
         this.transactionRepository = transactionRepository;
     }
 
-    public TransactionPersistOutput execute(TransactionPersistInput input) {
+    @Tool(name = "TransactionPersist", description = "Use case para persistir uma transação financeira.")
+    public TransactionPersistOutput execute(
+            @ToolParam(description = "Os dados da transação a ser persistida.") TransactionPersistInput input) {
         Transaction transaction = new Transaction(input.description(), input.amount(), input.category());
         var savedTransaction = transactionRepository.save(transaction);
         return TransactionPersistOutput.from(savedTransaction);
