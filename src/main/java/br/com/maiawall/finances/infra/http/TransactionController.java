@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.CharSet;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +28,12 @@ import br.com.maiawall.finances.application.usecase.ListTransactionsUseCase;
 import br.com.maiawall.finances.application.usecase.TransactionPersistUseCase;
 import br.com.maiawall.finances.application.usecase.audio.SynthesizeAudioUseCase;
 import br.com.maiawall.finances.application.usecase.audio.TranscribeAudioUseCase;
+import br.com.maiawall.finances.application.usecase.input.SynthesizeAudioInput;
 import br.com.maiawall.finances.application.usecase.input.TranscribeAudioInput;
 import br.com.maiawall.finances.domain.enums.Category;
 import br.com.maiawall.finances.infra.http.request.TransactionRequestDTO;
 import br.com.maiawall.finances.infra.http.response.TransactionResponseDTO;
+import org.springframework.http.HttpHeaders;
 
 @RestController
 @RequestMapping("/transactions")
@@ -84,16 +88,24 @@ public class TransactionController {
         return ResponseEntity.ok(transactionsResponse);
     }
 
-    @PostMapping(value = "/ai", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String transcribe(@RequestParam("file") MultipartFile file) throws Exception {
-        var output = transcribeAudioUseCase.execute(new TranscribeAudioInput(file));
+    @PostMapping(value = "/ai", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = "audio/mpeg")
+    public ResponseEntity<ByteArrayResource> transcribe(@RequestParam("file") MultipartFile file) throws Exception {
+        var text = transcribeAudioUseCase.execute(new TranscribeAudioInput(file));
 
         var result = chatClient.prompt()
-                .user(output.text())
+                .user(text.text())
                 .call()
                 .content();
 
-        return result;
+        var output = synthesizeAudioUseCase.execute(new SynthesizeAudioInput(result));
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("audio/mpeg"))
+                .contentLength(output.audio().length)
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment().filename("audio.mp3").build()
+                                .toString())
+                .body(new ByteArrayResource(output.audio()));
     }
 
 }
