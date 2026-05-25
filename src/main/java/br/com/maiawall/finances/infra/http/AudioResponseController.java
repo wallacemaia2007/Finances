@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.maiawall.finances.application.usecase.SynthesizeAudioUseCase;
-import br.com.maiawall.finances.application.usecase.input.SynthesizeAudioInput;
+import br.com.maiawall.finances.application.usecase.audio.SynthesizeAudioUseCase;
+import br.com.maiawall.finances.infra.http.request.SynthesizeAudioRequest;
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +24,8 @@ public class AudioResponseController {
         }
 
         @PostMapping(value = "/chat", consumes = MediaType.APPLICATION_JSON_VALUE, produces = "audio/mpeg")
-        public ResponseEntity<ByteArrayResource> sinthesize(@RequestBody SynthesizeAudioInput request) throws Exception {
+        public ResponseEntity<ByteArrayResource> sinthesize(@RequestBody SynthesizeAudioRequest request)
+                        throws Exception {
 
                 /*
                  * String textoResposta = chatClient
@@ -38,7 +39,7 @@ public class AudioResponseController {
                 // byte[] audio = convertTextToSpeech(textoResposta); // Para usar a resposta do
                 // chat como áudio
 
-                var output = synthesizeAudioUseCase.execute(request);
+                var output = synthesizeAudioUseCase.execute(request.toInput());
 
                 return ResponseEntity.ok()
                                 .header(HttpHeaders.CONTENT_DISPOSITION,

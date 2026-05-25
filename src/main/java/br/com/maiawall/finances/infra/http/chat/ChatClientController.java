@@ -1,4 +1,4 @@
-package br.com.maiawall.finances.infra.http;
+package br.com.maiawall.finances.infra.http.chat;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.GetMapping;

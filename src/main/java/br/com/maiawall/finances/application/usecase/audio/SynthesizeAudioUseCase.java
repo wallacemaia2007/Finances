@@ -1,4 +1,4 @@
-package br.com.maiawall.finances.application.usecase;
+package br.com.maiawall.finances.application.usecase.audio;
 
 import java.net.URI;
 import java.net.http.HttpClient;

@@ -1,44 +1,25 @@
 package br.com.maiawall.finances.infra.http;
 
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.messages.UserMessage;
-import org.springframework.ai.content.Media;
 import org.springframework.http.MediaType;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import br.com.maiawall.finances.application.usecase.audio.TranscribeAudioUseCase;
+import br.com.maiawall.finances.application.usecase.input.TranscribeAudioInput;
 
 @RestController
 @RequestMapping("/api")
 public class TranscriptionController {
 
-        private final ChatClient chatClient;
+        private final TranscribeAudioUseCase transcribeAudioUseCase;
 
-        public TranscriptionController(ChatClient chatClient) {
-                this.chatClient = chatClient;
+        public TranscriptionController(TranscribeAudioUseCase transcribeAudioUseCase) {
+                this.transcribeAudioUseCase = transcribeAudioUseCase;
         }
 
         @PostMapping(value = "/transcribe", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-        public String transcribe(
-                        @RequestParam("file") MultipartFile file) {
-
-                Media audioMedia = new Media(
-                                MimeTypeUtils.parseMimeType(file.getContentType()),
-                                file.getResource());
-
-                UserMessage userMessage = UserMessage.builder()
-                                .text("""
-                                                Transcreva o áudio para português.
-                                                Retorne apenas a transcrição.
-                                                """)
-                                .media(audioMedia)
-                                .build();
-
-                String response = chatClient.prompt()
-                                .messages(userMessage)
-                                .call()
-                                .content();
-
-                return response;
+        public String transcribe(@RequestParam("file") MultipartFile file) throws Exception {
+                var output = transcribeAudioUseCase.execute(new TranscribeAudioInput(file));
+                return output.text();
         }
 }
